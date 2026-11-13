@@ -10,5 +10,13 @@ EOT
     risk_level = string
     user_id    = string
   }))
+  validation {
+    condition = alltrue([
+      for k, v in var.user_risks : (
+        contains(["HIGH", "LOW"], v.risk_level)
+      )
+    ])
+    error_message = "must be one of: \"HIGH\", \"LOW\""
+  }
 }
 
